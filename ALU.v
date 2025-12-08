@@ -34,6 +34,14 @@ module alu_32bit_unsigned (
            .b(b),
            .out(or_out)
          );
+  
+  // XOR组件
+  wire [31:0] xor_out;
+  XOR_32  XOR_32_inst(
+           .a(a),
+           .b(b),
+           .out(xor_out)
+         );
 
   always @(*)
   begin
@@ -46,7 +54,7 @@ module alu_32bit_unsigned (
       3'b010:
         res = or_out;                        // OR
       3'b011:
-        res = a ^ b;                        // XOR
+        res = xor_out;                        // XOR
       3'b100:
       begin                               // SHL
         if (n == 0)
