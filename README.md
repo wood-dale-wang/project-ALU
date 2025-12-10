@@ -45,7 +45,7 @@
 | SHL |     | 需要移位算法 |
 | SHR |     | 需要移位算法 |
 | CUT |     ||
-| ADD |     | 需要超前进位加法器 |
+| ADD | 构建中 | 需要超前进位加法器 |
 | MUX |     | 8-1 多路复用器 |
 
 ## 运行
@@ -62,13 +62,14 @@
 
 ```ini
 [source]
-ALU.v
-AND_32.v
-NOT_32.v
-OR_32.v
+src/ALU.v
+src/AND_32.v
+src/NOT_32.v
+src/OR_32.v
+src/XOR_32.v
 
 [tb]
-ALU_tb.v
+tb/ALU_tb.v
 
 [vcd]
 
@@ -79,3 +80,7 @@ run:
 ```pwsh
 ./run.ps1
 ```
+
+## 文档
+
+见docs目录，使用typst编写，后面会上传对应的pdf，或者vsc加载typst插件查看。
