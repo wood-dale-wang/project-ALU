@@ -32,20 +32,20 @@ module ADD_4(
   //   assign res[3]=a[3] ^ b[3] ^ C[2];
 
   // 产生cin相关位
-  wire PxCIN[3:0];
+  wire [3:0] PxCIN;
   and u_and_p0cin(PxCIN[0],P[0],cin);
   and u_and_p1cin(PxCIN[1],P[1],P[0],cin);
   and u_and_p2cin(PxCIN[2],P[2],P[1],P[0],cin);
   and u_and_p3cin(PxCIN[3],P[3],P[2],P[1],P[0],cin);
 
   // 产生G0相关位
-  wire PxG0[2:0];
+  wire [2:0] PxG0;
   and u_and_p1g0(PxG0[0],P[1],G[0]);
   and u_and_p2g0(PxG0[1],P[2],P[1],G[0]);
   and u_and_p3g0(PxG0[2],P[3],P[2],P[1],G[0]);
 
   // 产生G1相关位
-  wire PxG1[1:0];
+  wire [1:0] PxG1;
   and u_and_p2g1(PxG1[0],P[2],G[1]);
   and u_and_p3g1(PxG1[1],P[3],P[2],G[1]);
 

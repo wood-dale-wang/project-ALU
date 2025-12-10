@@ -3,7 +3,7 @@ def generate_and_statements(max_index=30,Gnum=0,Pstart=1):
     Generate Verilog 'and' statements for PxG0[0] to PxG0[max_index]
     This corresponds to i from 1 to max_index+1
     """
-    lines = [f"  wire PxG{Gnum}[{max_index}:0];"]
+    lines = [f"  wire [{max_index}:0] PxG{Gnum};"]
     for idx in range(0, max_index + 1):  # idx = 0 to 30
         i = idx + 1  # because p1g0 corresponds to PxG0[0]
         output = f"PxG{Gnum}[{idx}]"

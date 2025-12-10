@@ -6,7 +6,7 @@ module ADD_t(
     output wire cout
   );
 
-  wire C[2:0];
+  wire [2:0] C;
 
   assign C[0]=a[0] & b[0] | a[0] & cin | b[0] & cin;
   assign res[0]=a[0] ^ b[0] ^ cin;
