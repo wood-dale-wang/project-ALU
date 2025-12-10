@@ -43,6 +43,17 @@ module alu_32bit_unsigned (
            .out(xor_out)
          );
 
+  // 32位超前进位加法器
+  wire [31:0] add_out;
+  wire cout_tmp;
+  ADD_32  ADD_32_inst (
+            .cin(cin),
+            .a(a),
+            .b(b),
+            .res(add_out),
+            .cout(cout_tmp)
+          );
+
   always @(*)
   begin
     co = 1'b0;
@@ -84,7 +95,8 @@ module alu_32bit_unsigned (
       end
       3'b111:
       begin                               // ADD with carry
-        {co, res} = a + b + cin;
+        res <= add_out;
+        co <= cout_tmp;
       end
       default:
       begin

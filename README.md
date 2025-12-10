@@ -45,7 +45,7 @@
 | SHL |     | 需要移位算法 |
 | SHR |     | 需要移位算法 |
 | CUT |     ||
-| ADD | 构建中 | 需要超前进位加法器 |
+| ADD | 完成 | 现在是直接构建的32位超前进位加法器，可以改为分层构建 |
 | MUX |     | 8-1 多路复用器 |
 
 ## 运行
@@ -67,6 +67,7 @@ src/AND_32.v
 src/NOT_32.v
 src/OR_32.v
 src/XOR_32.v
+src/ADDER/ADD_32.v
 
 [tb]
 tb/ALU_tb.v
@@ -80,6 +81,10 @@ run:
 ```pwsh
 ./run.ps1
 ```
+
+### 生成器
+
+`src/generate.py`是用来构建32位超前进位加法器的构建器，按照规律输出verilog语句。
 
 ## 文档
 
