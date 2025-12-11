@@ -10,7 +10,7 @@ module ADD_4_tb;
   wire [3:0] res;
   wire  cout;
 
-  ADD_4  ADD_4_inst (
+  ADD_4bit  ADD_4_inst (
            .cin(cin),
            .a(a),
            .b(b),
