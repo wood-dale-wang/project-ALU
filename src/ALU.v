@@ -7,7 +7,7 @@ module alu_32bit_unsigned (
     output wire        cout         // 进位输出（仅ADD有效）
   );
 
-  wire [4:0] n = b[4:0];  // 截断/移位位数（0~31）
+  wire [5:0] n = b[5:0];  // 截断/移位位数（0~31+32）
 
   reg [31:0] res;
   reg        co;
@@ -43,6 +43,14 @@ module alu_32bit_unsigned (
            .out(xor_out)
          );
 
+  // SHL
+  wire [31:0] shl_out;
+  SHL_top  SHL_top_inst (
+             .n(n),
+             .in(a),
+             .out(shl_out)
+           );
+
   // 32位超前进位加法器
   wire [31:0] add_out;
   wire cout_tmp;
@@ -68,12 +76,7 @@ module alu_32bit_unsigned (
         res = xor_out;                        // XOR
       3'b100:
       begin                               // SHL
-        if (n == 0)
-          res = a;
-        else if (n >= 32)
-          res = 32'd0;
-        else
-          res = a << n;
+        res = shl_out;
       end
       3'b101:
       begin                               // SHR
