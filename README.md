@@ -43,7 +43,7 @@
 | OR  | 完成 ||
 | XOR | 完成 ||
 | SHL | 完成 | 需要移位算法 |
-| SHR |     | 需要移位算法 |
+| SHR | 完成 | 需要移位算法 |
 | CUT |     ||
 | ADD | 完成 | 现在是直接构建的32位超前进位加法器，可以改为分层构建 |
 | MUX |     | 8-1 多路复用器 |
@@ -62,12 +62,18 @@
 
 ```ini
 [source]
+[source]
 src/ALU.v
 src/AND_32.v
 src/NOT_32.v
 src/OR_32.v
 src/XOR_32.v
 src/ADDER/ADD_32.v
+src/MUX/MUX_2.v
+src/SH/SHL_x.v
+src/SH/SHL_top.v
+src/SH/SHR_x.v
+src/SH/SHR_top.v
 
 [tb]
 tb/ALU_tb.v

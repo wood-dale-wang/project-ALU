@@ -1,7 +1,7 @@
-// shl不同位数的模块 统一存放
+// shR不同位数的模块 统一存放
 
-// 32bit 一位左移(即向高位移动一位，补零)
-module SHL_1(
+// 32bit 一位右移(即向高位移动一位，补零)
+module SHR_1(
     input wire [31:0] in,
     output wire [31:0] out
   );
@@ -9,20 +9,20 @@ module SHL_1(
   wire zero;
   xor(zero,in[0],in[0]);//产生0
 
-  buf u_buf_0(out[0],zero);
+  buf u_buf_0(out[31],zero);
 
   genvar i;
   generate
-    for (i = 1; i < 32; i = i + 1)
+    for (i = 0; i < 31; i = i + 1)
     begin : buf_bit
-      buf u_buf (out[i], in[i-1]);
+      buf u_buf (out[i], in[i+1]);
     end
   endgenerate
 
 endmodule
 
-// 32bit 左移两位
-module SHL_2(
+// 32bit 右移两位
+module SHR_2(
     input wire [31:0] in,
     output wire [31:0] out
   );
@@ -30,21 +30,21 @@ module SHL_2(
   wire zero;
   xor(zero,in[0],in[0]);//产生0
 
-  buf u_buf_0(out[0],zero);
-  buf u_buf_1(out[1],zero);
+  buf u_buf_0(out[31],zero);
+  buf u_buf_1(out[30],zero);
 
   genvar i;
   generate
-    for (i = 2; i < 32; i = i + 1)
-    begin : buf_0_bit
-      buf u_buf (out[i],zero);  
+    for (i = 0; i < 30; i = i + 1)
+    begin : buf_bit
+      buf u_buf (out[i], in[i+2]);
     end
   endgenerate
 
 endmodule
 
-// 32bit 左移四位
-module SHL_4(
+// 32bit 右移四位
+module SHR_4(
     input wire [31:0] in,
     output wire [31:0] out
   );
@@ -53,24 +53,24 @@ module SHL_4(
   xor(zero,in[0],in[0]);//产生0
 
   genvar i;
-  generate//低位补0
+  generate//高位补0
     for (i = 0; i < 4; i = i + 1)
     begin : buf_0_bit
-      buf u_buf (out[i],zero);  
+      buf u_buf (out[31-i],zero);  
     end
   endgenerate
 
-  generate//高位
-    for (i = 4; i < 32; i = i + 1)
+  generate//低位
+    for (i = 0; i < 32-4; i = i + 1)
     begin : buf_bit
-      buf u_buf (out[i], in[i-4]);
+      buf u_buf (out[i], in[i+4]);
     end
   endgenerate
 
 endmodule
 
-// 32bit 左移八位
-module SHL_8(
+// 32bit 右移八位
+module SHR_8(
     input wire [31:0] in,
     output wire [31:0] out
   );
@@ -79,24 +79,24 @@ module SHL_8(
   xor(zero,in[0],in[0]);//产生0
 
   genvar i;
-  generate//低位补0
+  generate//高位补0
     for (i = 0; i < 8; i = i + 1)
     begin : buf_0_bit
-      buf u_buf (out[i],zero);  
+      buf u_buf (out[31-i],zero);  
     end
   endgenerate
 
-  generate//高位
-    for (i = 8; i < 32; i = i + 1)
+  generate//低位
+    for (i = 0; i < 32-8; i = i + 1)
     begin : buf_bit
-      buf u_buf (out[i], in[i-8]);
+      buf u_buf (out[i], in[i+8]);
     end
   endgenerate
 
 endmodule
 
-// 32bit 左移十六位
-module SHL_16(
+// 32bit 右移十六位
+module SHR_16(
     input wire [31:0] in,
     output wire [31:0] out
   );
@@ -105,19 +105,17 @@ module SHL_16(
   xor(zero,in[0],in[0]);//产生0
 
   genvar i;
-  // out[31:16] = in[15:0]
-  generate
+  generate//高位补0
     for (i = 0; i < 16; i = i + 1)
-    begin : high_bits
-      buf b (out[31 - i], in[15 - i]);
+    begin : buf_0_bit
+      buf u_buf (out[31-i],zero);  
     end
   endgenerate
 
-  // out[15:0] = 0
-  generate
-    for (i = 0; i < 16; i = i + 1)
-    begin : low_bits
-      buf b (out[i], zero);  
+  generate//低位
+    for (i = 0; i < 32-16; i = i + 1)
+    begin : buf_bit
+      buf u_buf (out[i], in[i+16]);
     end
   endgenerate
 

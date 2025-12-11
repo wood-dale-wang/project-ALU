@@ -34,14 +34,14 @@ module alu_32bit_unsigned (
            .b(b),
            .out(or_out)
          );
-  
+
   // XOR组件
   wire [31:0] xor_out;
   XOR_32  XOR_32_inst(
-           .a(a),
-           .b(b),
-           .out(xor_out)
-         );
+            .a(a),
+            .b(b),
+            .out(xor_out)
+          );
 
   // SHL
   wire [31:0] shl_out;
@@ -49,6 +49,14 @@ module alu_32bit_unsigned (
              .n(n),
              .in(a),
              .out(shl_out)
+           );
+
+  // SHR
+  wire [31:0] shr_out;
+  SHR_top  SHR_top_inst (
+             .n(n),
+             .in(a),
+             .out(shr_out)
            );
 
   // 32位超前进位加法器
@@ -75,18 +83,9 @@ module alu_32bit_unsigned (
       3'b011:
         res = xor_out;                        // XOR
       3'b100:
-      begin                               // SHL
-        res = shl_out;
-      end
+        res = shl_out;                    // SHL
       3'b101:
-      begin                               // SHR
-        if (n == 0)
-          res = a;
-        else if (n >= 32)
-          res = 32'd0;
-        else
-          res = a >> n;
-      end
+        res=shr_out;                   // SHL
       3'b110:
       begin                               // CUT: 保留低 n 位
         if (n == 0)
