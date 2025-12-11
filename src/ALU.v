@@ -85,7 +85,7 @@ module alu_32bit_unsigned (
       3'b100:
         res = shl_out;                    // SHL
       3'b101:
-        res=shr_out;                   // SHL
+        res=shr_out;                      // SHR
       3'b110:
       begin                               // CUT: 保留低 n 位
         if (n == 0)

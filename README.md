@@ -62,7 +62,6 @@
 
 ```ini
 [source]
-[source]
 src/ALU.v
 src/AND_32.v
 src/NOT_32.v
