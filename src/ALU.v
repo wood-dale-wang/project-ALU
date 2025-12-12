@@ -59,6 +59,13 @@ module alu_32bit_unsigned (
              .out(shr_out)
            );
 
+  wire [31:0] cut_out;
+  CUT_32  CUT_32_inst (
+            .n(n),
+            .in(a),
+            .out(cut_out)
+          );
+
   // 32位超前进位加法器
   wire [31:0] add_out;
   wire cout_tmp;
@@ -85,16 +92,9 @@ module alu_32bit_unsigned (
       3'b100:
         res = shl_out;                    // SHL
       3'b101:
-        res=shr_out;                      // SHR
+        res = shr_out;                      // SHR
       3'b110:
-      begin                               // CUT: 保留低 n 位
-        if (n == 0)
-          res = 32'd0;
-        else if (n >= 32)
-          res = a;
-        else
-          res = a & ((32'd1 << n) - 1);
-      end
+        res = cut_out;                   // CUT: 保留低 n 位
       3'b111:
       begin                               // ADD with carry
         res <= add_out;

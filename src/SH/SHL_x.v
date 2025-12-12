@@ -37,7 +37,7 @@ module SHL_2(
   generate
     for (i = 2; i < 32; i = i + 1)
     begin : buf_0_bit
-      buf u_buf (out[i],zero);  
+      buf u_buf (out[i],in[i-2]);
     end
   endgenerate
 
@@ -56,7 +56,7 @@ module SHL_4(
   generate//低位补0
     for (i = 0; i < 4; i = i + 1)
     begin : buf_0_bit
-      buf u_buf (out[i],zero);  
+      buf u_buf (out[i],zero);
     end
   endgenerate
 
@@ -82,7 +82,7 @@ module SHL_8(
   generate//低位补0
     for (i = 0; i < 8; i = i + 1)
     begin : buf_0_bit
-      buf u_buf (out[i],zero);  
+      buf u_buf (out[i],zero);
     end
   endgenerate
 
@@ -117,7 +117,7 @@ module SHL_16(
   generate
     for (i = 0; i < 16; i = i + 1)
     begin : low_bits
-      buf b (out[i], zero);  
+      buf b (out[i], zero);
     end
   endgenerate
 

@@ -1,0 +1,56 @@
+
+module CUT_32_tb;
+  //Ports
+  reg [5:0] n;
+  reg [31:0] in;
+  wire [31:0] out;
+
+  CUT_32  CUT_32_inst (
+            .n(n),
+            .in(in),
+            .out(out)
+          );
+
+  initial
+  begin
+    n<=0;
+    in<=32'hFFFFFFFF;
+    #10;
+
+    n<=1;
+    #10;
+
+    n<=2;
+    #10;
+
+    n<=3;
+    #10;
+
+    n<=4;
+    #10;
+
+    n<=15;
+    #10;
+
+    n<=25;
+    #10;
+
+    n<=30;
+    #10;
+
+    n<=31;
+    #10;
+
+    n<=32;
+    #10;
+
+    $finish;
+  end
+
+  initial
+  begin
+    $dumpfile("cut.vcd"); // 生成vcd文件，记录仿真信息
+    $dumpvars(0,CUT_32_inst); // 指定记录层数，记录信号
+  end
+
+endmodule
