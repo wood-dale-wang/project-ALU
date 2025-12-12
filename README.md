@@ -46,7 +46,7 @@
 | SHR | 完成 | 需要移位算法 |
 | CUT | 完成 ||
 | ADD | 完成 | 现在是直接构建的32位超前进位加法器，可以改为分层构建 |
-| MUX |     | 8-1 多路复用器 |
+| MUX | 完成 | 8-1 多路复用器 |
 
 ## 运行
 
@@ -62,6 +62,7 @@
 
 ```ini
 [source]
+[source]
 src/ALU.v
 src/AND_32.v
 src/NOT_32.v
@@ -74,6 +75,8 @@ src/SH/SHL_top.v
 src/SH/SHR_x.v
 src/SH/SHR_top.v
 src/CUT_32.v
+src/MUX/AND_1_32.v
+src/MUX/MUX_8.v
 
 [tb]
 tb/ALU_tb.v

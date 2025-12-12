@@ -7,10 +7,14 @@ module alu_32bit_unsigned (
     output wire        cout         // 进位输出（仅ADD有效）
   );
 
-  wire [5:0] n = b[5:0];  // 截断/移位位数（0~31+32）
-
-  reg [31:0] res;
-  reg        co;
+  wire [5:0] n;  // 截断/移位位数（0~31+32）
+  genvar i;
+  generate
+    for (i = 0; i < 6; i = i + 1)
+    begin : get_n
+      buf u_buf(n[i], b[i]);
+    end
+  endgenerate
 
   //NOT组件
   wire [31:0] not_out;
@@ -77,38 +81,21 @@ module alu_32bit_unsigned (
             .cout(cout_tmp)
           );
 
-  always @(*)
-  begin
-    co = 1'b0;
-    case (opcode)
-      3'b000:
-        res = not_out;                     // NOT
-      3'b001:
-        res = and_out;                      // AND
-      3'b010:
-        res = or_out;                        // OR
-      3'b011:
-        res = xor_out;                        // XOR
-      3'b100:
-        res = shl_out;                    // SHL
-      3'b101:
-        res = shr_out;                      // SHR
-      3'b110:
-        res = cut_out;                   // CUT: 保留低 n 位
-      3'b111:
-      begin                               // ADD with carry
-        res <= add_out;
-        co <= cout_tmp;
-      end
-      default:
-      begin
-        res = 32'd0;
-        co = 1'b0;
-      end
-    endcase
-  end
+  MUX_8_32bit  MUX_8_32bit_inst (
+                 .ch(opcode),
+                 .in0(not_out),// NOT
+                 .in1(and_out),// AND
+                 .in2(or_out),// OR
+                 .in3(xor_out),// XOR
+                 .in4(shl_out),// SHL
+                 .in5(shr_out),// SHR
+                 .in6(cut_out),// CUT: 保留低 n 位
+                 .in7(add_out),// ADD with carry
+                 .out(result)
+               );
 
-  assign result = res;
-  assign cout  = (opcode == 3'b111) ? co : 1'b0;
+    wire tmp_have_cout;// 只有opcode==7的时候才放行cout
+    and u_and_have_cout(tmp_have_cout,opcode[0],opcode[1],opcode[2]);
+    and u_and_cout(cout,cout_tmp,tmp_have_cout);
 
 endmodule
