@@ -1,7 +1,7 @@
 module alu_32bit_unsigned (
     input  wire [2:0]  opcode,      // 操作码
     input  wire [31:0] a,           // 操作数1
-    input  wire [31:0] b,           // 操作数2（移位/截断数量取低5位）
+    input  wire [31:0] b,           // 操作数2（移位/截断数量取低6位）
     input  wire        cin,         // 进位输入（仅ADD使用）
     output wire [31:0] result,      // 运算结果
     output wire        cout         // 进位输出（仅ADD有效）
