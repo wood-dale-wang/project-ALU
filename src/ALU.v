@@ -63,6 +63,7 @@ module alu_32bit_unsigned (
              .out(shr_out)
            );
 
+  // CUT
   wire [31:0] cut_out;
   CUT_32  CUT_32_inst (
             .n(n),
@@ -90,7 +91,7 @@ module alu_32bit_unsigned (
                  .in4(shl_out),// SHL
                  .in5(shr_out),// SHR
                  .in6(cut_out),// CUT: 保留低 n 位
-                 .in7(add_out),// ADD with carry
+                 .in7(add_out),// ADD
                  .out(result)
                );
 
